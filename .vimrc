@@ -39,12 +39,13 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'navarasu/onedark.nvim'
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Yggdroot/indentLine'
 call plug#end()
 
 let g:onedark_config = {
-    \ 'style': 'warmer',
+    \ 'style': 'darker',
 \}
+
 colorscheme onedark
 
 :lua require("telescope").setup{defaults = { file_ignore_patterns= {"node_modules", "lib", "Pods", "coverage", "ios", "android"}}}
@@ -55,8 +56,21 @@ nnoremap <leader>fe :NERDTree<cr>
 nnoremap <leader>kw :only<cr>
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+" Change the entire file contents
+nnoremap <leader>ca ggVGc
+" Yank the entire file to system clipboard
+nnoremap <leader>ya ggVG"+y
+" Run the current file in node
+nnoremap <leader>nr :w<cr>:!node %:p<cr>
+" Spotify 
+nnoremap <leader>pl :!play 
+nnoremap <leader>vl :!vol 
+nnoremap <leader>sps :!pause<cr> 
+
+" Clear search on enter
 nnoremap <CR> :noh<CR><CR>
 
+" Switch window panes
 noremap <C-h> <C-w>h<cr>
 noremap <C-j> <C-w>j<cr>
 noremap <C-k> <C-w>k<cr>
@@ -64,7 +78,6 @@ noremap <C-l> <C-w>l<cr>
 
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
-
 
 nnoremap <silent> K :call CocAction('doHover')<CR>
 nmap <leader>do <Plug>(coc-codeaction)
@@ -94,19 +107,20 @@ hi tsxAttrib guifg=#F8BD7F cterm=italic gui=italic
 hi ReactState guifg=#C176A7
 hi ReactProps guifg=#D19A66
 
-hi PmenuSel guifg=#F0F0F0 guibg=#606060
-
 let g:NERDTreeIgnore = ['^build$', '^node_modules$', '^lib$', '^Pods$']
 
 " enable line numbers
 let NERDTreeShowLineNumbers=1
 " make sure relative line numbers are used
 autocmd FileType nerdtree setlocal relativenumber
+hi Normal guibg=NONE ctermbg=NONE
 
+let g:indentLine_char_list = ['┆']
 
-let g:indent_guides_enable_on_vim_startup = 1
+highlight CursorLineNr guifg=#EECC77 gui=bold
+set cursorline
 
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#323238
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd guibg=#2a2a2d
-
+:highlight CocFloating guifg=#a0a0a0 guibg=#181820 
+hi PmenuSel guibg=#555566 guifg=#000000
+" Change error colors
+" :highlight CocErrorFloat ctermfg=color

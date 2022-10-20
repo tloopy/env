@@ -11,6 +11,8 @@ alias vim="nvim"
 alias v.="v ."
 alias vrc="v ~/.vimrc"
 
+alias fcfg="v ~/.config/fish/config.fish"
+
 alias gp="git pull"
 alias gs="git status"
 alias gd="git diff"
@@ -46,10 +48,16 @@ end
 export TERM="xterm-256color"
 
 
-function fish_prompt -d "Write out the prompt"
-    # This shows up as USER@HOST /home/user/ >, with the directory colored
-    # $USER and $hostname are set by fish, so you can just use them
-    # instead of using `whoami` and `hostname`
-    printf '%s%s%s > ' \
-        (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)
+function clonetcam
+    if count $argv > /dev/null
+        gh repo clone Tactacam-LLC/$argv
+    end
 end
+
+function clone
+    if count $argv > /dev/null
+        gh repo clone $argv
+    end
+end
+
+set BROWSER firefox
